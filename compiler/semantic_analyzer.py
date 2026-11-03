@@ -269,3 +269,4 @@ class SemanticAnalyzer(ASTVisitor):
     def visit_TupleLiteral(self, node: TupleLiteral) -> None:
         for elem in node.elements:
             elem.accept(self)
+

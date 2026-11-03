@@ -25,3 +25,4 @@
 - [ ] M10: HAKAI Studio Desktop IDE (PySide6 with editor, syntax highlighter, explorer, console)
 - [ ] M11: HPM Package Manager (`package_manager/`)
 - [ ] M12: CLI, Interactive REPL, Windows installer scripts, Full Documentation & 1.0 Release
+

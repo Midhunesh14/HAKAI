@@ -48,3 +48,4 @@ def test_studio_widgets(qapp):
     assert "HAKAI Studio" in window.windowTitle()
     assert window.tab_widget.count() >= 1
     window.close()
+

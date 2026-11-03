@@ -57,3 +57,4 @@ class Compiler:
             f.write(data)
 
         return output_path
+

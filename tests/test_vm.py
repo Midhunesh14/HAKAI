@@ -90,3 +90,4 @@ def test_vm_collections():
     vm_out = run_vm(source)
     assert vm_out == interp_out
     assert vm_out == "10\n99"
+

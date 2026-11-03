@@ -99,3 +99,4 @@ def test_invalid_character_raises():
     with pytest.raises(HakaiLexerError) as exc_info:
         Lexer(source).tokenize()
     assert "Unexpected character" in str(exc_info.value)
+

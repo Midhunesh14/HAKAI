@@ -226,3 +226,4 @@ class ASTVisitor:
         raise NotImplementedError(
             f"No visit_{node.__class__.__name__} method defined on {self.__class__.__name__}"
         )
+

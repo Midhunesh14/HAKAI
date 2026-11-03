@@ -234,3 +234,4 @@ class StudioMainWindow(QMainWindow):
             "An independent development environment for the HAKAI programming language.\n"
             "Built with PySide6.",
         )
+

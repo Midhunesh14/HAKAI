@@ -22,3 +22,4 @@ math_extra = "1.0.0"
 - `hpm list`: List installed packages.
 - `hpm info <package>`: Display package metadata.
 - `hpm search <query>`: Search available packages.
+

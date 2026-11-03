@@ -274,3 +274,4 @@ def main(argv: Optional[List[str]] = None) -> int:
         return cmd_studio()
 
     return 0
+

@@ -34,3 +34,4 @@ All notable changes to the HAKAI language and toolchain will be documented in th
 - **Testing & Quality Assurance**:
   - 37 unit and integration tests with 100% pass rate.
   - Validated semantic equivalence between AST interpreter and bytecode VM.
+

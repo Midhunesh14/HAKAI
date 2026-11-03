@@ -17,3 +17,4 @@ def launch_studio() -> int:
 
 
 __all__ = ["launch_studio", "StudioMainWindow"]
+

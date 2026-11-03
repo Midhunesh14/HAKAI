@@ -67,3 +67,4 @@
 - `docs/`: Complete language documentation suite
 - `examples/`: Canonical HAKAI programs demonstrating language features
 - `tests/`: Extensive automated test suites across all modules
+

@@ -132,3 +132,4 @@ def test_parser_syntax_error():
     with pytest.raises(HakaiSyntaxError) as exc_info:
         parse_source(source)
     assert "Expected an expression" in str(exc_info.value)
+

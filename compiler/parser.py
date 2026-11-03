@@ -702,3 +702,4 @@ class Parser:
             column=tok.column,
             source_code=self.source_code,
         )
+

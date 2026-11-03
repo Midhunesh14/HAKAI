@@ -88,3 +88,4 @@ class HakaiFunction(HakaiCallable):
 
     def __repr__(self) -> str:
         return self.__hakai_str__()
+

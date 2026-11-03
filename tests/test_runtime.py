@@ -30,3 +30,4 @@ def test_file_io_operations():
         Interpreter(runtime_context=ctx).interpret(program)
 
         assert buf.getvalue().strip() == "Hello from HAKAI Filesystem"
+

@@ -43,3 +43,4 @@ class VirtualMachine:
             data = f.read()
         code_obj = HakaiCodeObject.deserialize(data)
         return self.run(code_obj)
+

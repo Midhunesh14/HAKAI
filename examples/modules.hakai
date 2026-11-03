@@ -12,3 +12,4 @@ print("Trimmed & Uppercase: " + strings.upper(strings.trim(raw)))
 print("Contains 'lang': " + str(strings.contains(raw, "lang")))
 
 HAKAI END
+

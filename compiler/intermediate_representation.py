@@ -29,3 +29,4 @@ class IRProgram:
     blocks: List[IRBlock]
     constants: List[Any]
     globals: List[str]
+

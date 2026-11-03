@@ -68,3 +68,4 @@ def test_cli_integration_runner(tmp_path):
     # Test run bytecode command
     ret_run_bc = cli_main(["run", hbc_path])
     assert ret_run_bc == 0
+

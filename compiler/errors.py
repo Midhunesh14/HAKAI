@@ -102,3 +102,4 @@ class HakaiBreakSignal(Exception):
 
 class HakaiContinueSignal(Exception):
     """Control flow signal for continue statement."""
+

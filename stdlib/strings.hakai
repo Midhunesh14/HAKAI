@@ -15,3 +15,4 @@ function pad_left(s, total_len, pad_char = " ") {
     }
     return repeat_str(pad_char, diff) + s
 }
+

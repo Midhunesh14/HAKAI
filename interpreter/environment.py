@@ -92,3 +92,4 @@ class Environment:
             source_code=source_code,
             suggestion=f"Check spelling or define '{name}' before using it.",
         )
+

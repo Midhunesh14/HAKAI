@@ -51,3 +51,4 @@ def test_bytecode_file_serialization():
         deserialized = HakaiCodeObject.deserialize(data)
         assert deserialized.name == src_file
         assert "HAKAI Bytecode Works" in deserialized.constants
+

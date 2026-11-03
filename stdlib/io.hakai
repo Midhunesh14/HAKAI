@@ -7,3 +7,4 @@ function log_info(msg) {
 function log_error(msg) {
     print("[ERROR] " + str(msg))
 }
+

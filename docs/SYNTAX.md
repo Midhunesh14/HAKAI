@@ -95,3 +95,4 @@ class Student {
 let s = Student("Santhiya", 21)
 s.display()
 ```
+

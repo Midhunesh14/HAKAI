@@ -31,3 +31,4 @@ class TerminalWidget(QWidget):
 
     def clear(self) -> None:
         self.text_area.clear()
+

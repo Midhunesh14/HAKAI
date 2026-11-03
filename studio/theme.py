@@ -106,3 +106,4 @@ QStatusBar {
     border-top: 1px solid #2d2d34;
 }
 """
+

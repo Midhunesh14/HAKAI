@@ -63,3 +63,4 @@ class PackageMetadata:
     def save(self, path: str) -> None:
         with open(path, "w", encoding="utf-8") as f:
             f.write(self.to_toml())
+

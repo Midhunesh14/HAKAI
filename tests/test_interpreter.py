@@ -181,3 +181,4 @@ def test_standard_math_and_strings():
     """
     expected = "12.0\n8.0\nHAKAI\ntrue"
     assert run_code(source) == expected
+

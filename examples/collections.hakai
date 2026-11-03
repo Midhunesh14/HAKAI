@@ -20,3 +20,4 @@ print("Latitude: " + str(coordinates[0]))
 print("Longitude: " + str(coordinates[1]))
 
 HAKAI END
+

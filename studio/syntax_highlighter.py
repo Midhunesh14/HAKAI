@@ -61,3 +61,4 @@ class HakaiSyntaxHighlighter(QSyntaxHighlighter):
         for pattern, fmt in self.highlighting_rules:
             for match in pattern.finditer(text):
                 self.setFormat(match.start(), match.end() - match.start(), fmt)
+

@@ -32,3 +32,4 @@ let student2 = GraduateStudent("Alex", 24, "Compiler Design")
 student2.display()
 
 HAKAI END
+

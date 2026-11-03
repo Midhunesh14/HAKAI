@@ -46,3 +46,4 @@ HAKAI bytecode files contain:
 - `RETURN`: Return from current frame
 - `POP`: Discard top of stack
 - `HALT`: Terminate execution
+

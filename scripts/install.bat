@@ -25,3 +25,4 @@ if %errorlevel% equ 0 (
 ) else (
     echo [ERROR] Verification tests failed.
 )
+

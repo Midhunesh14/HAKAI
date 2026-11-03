@@ -621,3 +621,4 @@ class HakaiModuleObject:
 
     def __repr__(self) -> str:
         return self.__hakai_str__()
+

@@ -40,3 +40,4 @@ class FileExplorer(QWidget):
     def set_root_path(self, path: str) -> None:
         self.model.setRootPath(path)
         self.tree.setRootIndex(self.model.index(path))
+

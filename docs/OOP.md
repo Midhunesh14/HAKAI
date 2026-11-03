@@ -39,3 +39,4 @@ class MathUtil {
 
 print(MathUtil.square(9))
 ```
+

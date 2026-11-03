@@ -80,3 +80,4 @@ Primary        ::= INTEGER | FLOAT | STRING | BOOLEAN | "null"
 - `self` binds explicitly to the calling instance.
 - Single inheritance via `class Child extends Parent`.
 - Virtual method dispatch with `super` access.
+

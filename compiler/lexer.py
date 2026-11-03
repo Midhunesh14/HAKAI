@@ -341,3 +341,4 @@ class Lexer:
             literal = None
 
         return self._make_token(kind, literal=literal)
+

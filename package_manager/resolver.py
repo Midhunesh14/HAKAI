@@ -41,3 +41,4 @@ class DependencyResolver:
 
         _resolve_deps(root_manifest.dependencies, [root_manifest.name])
         return list(resolved.values())
+

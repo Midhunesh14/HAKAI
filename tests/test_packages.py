@@ -60,3 +60,4 @@ def test_package_installer_workflow():
         installed_after = installer.list_installed()
         assert "my_math" not in installed_after
         assert not os.path.exists(os.path.join(app_dir, ".hakai_packages", "my_math"))
+
