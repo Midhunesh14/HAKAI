@@ -1,0 +1,16 @@
+HAKAI START
+
+// Variables and Data Types
+let name = "Santhiya"
+let age = 21
+let height = 5.8
+let is_student = true
+const PI = 3.14159
+
+print("Name: " + name)
+print("Age: " + str(age))
+print("Height: " + str(height))
+print("Is Student: " + str(is_student))
+print("Constant PI: " + str(PI))
+
+HAKAI END

@@ -1,0 +1,22 @@
+HAKAI START
+
+// Collections: Arrays, Maps, and Tuples
+let numbers = [10, 20, 30, 40]
+print("First element: " + str(numbers[0]))
+numbers[1] = 99
+print("Updated second element: " + str(numbers[1]))
+print("Array length: " + str(len(numbers)))
+
+let user = {
+    "name": "Santhiya",
+    "role": "Lead Architect",
+    "level": 10
+}
+print("User name: " + user["name"])
+print("User role: " + user["role"])
+
+let coordinates = (12.9716, 77.5946)
+print("Latitude: " + str(coordinates[0]))
+print("Longitude: " + str(coordinates[1]))
+
+HAKAI END

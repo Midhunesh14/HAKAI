@@ -1,0 +1,5 @@
+// HAKAI System Standard Library
+
+function info() {
+    return "HAKAI Engine v1.0.0"
+}

@@ -1,0 +1,32 @@
+HAKAI START
+
+// Functions and Closures
+function add(a, b) {
+    return a + b
+}
+
+function factorial(n) {
+    if n <= 1 {
+        return 1
+    }
+    return n * factorial(n - 1)
+}
+
+function make_counter(start) {
+    let count = start
+    function increment() {
+        count = count + 1
+        return count
+    }
+    return increment
+}
+
+let result = add(10, 20)
+print("10 + 20 = " + str(result))
+print("5! = " + str(factorial(5)))
+
+let counter = make_counter(100)
+print("Counter: " + str(counter()))
+print("Counter: " + str(counter()))
+
+HAKAI END

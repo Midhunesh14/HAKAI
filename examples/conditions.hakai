@@ -1,0 +1,14 @@
+HAKAI START
+
+// Conditional Branching
+let age = 21
+
+if age >= 18 {
+    print("Eligible for voting and higher education.")
+} else if age >= 13 {
+    print("Teenager.")
+} else {
+    print("Child.")
+}
+
+HAKAI END

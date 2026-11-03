@@ -1,0 +1,14 @@
+HAKAI START
+
+// Using the Standard Library Modules
+import math
+import strings
+
+print("Square root of 144: " + str(math.sqrt(144)))
+print("2 raised to 8: " + str(math.pow(2, 8)))
+
+let raw = "   hakai language   "
+print("Trimmed & Uppercase: " + strings.upper(strings.trim(raw)))
+print("Contains 'lang': " + str(strings.contains(raw, "lang")))
+
+HAKAI END

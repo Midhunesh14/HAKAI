@@ -1,0 +1,17 @@
+// HAKAI Strings Standard Library
+
+function repeat_str(s, times) {
+    let result = ""
+    repeat times {
+        result = result + s
+    }
+    return result
+}
+
+function pad_left(s, total_len, pad_char = " ") {
+    let diff = total_len - len(s)
+    if diff <= 0 {
+        return s
+    }
+    return repeat_str(pad_char, diff) + s
+}

@@ -1,0 +1,21 @@
+HAKAI START
+
+// Loops in HAKAI
+
+print("--- Repeat Loop ---")
+repeat 3 {
+    print("Hello HAKAI")
+}
+
+print("--- While Loop with Control Flow ---")
+let age = 20
+while age < 25 {
+    age = age + 1
+    if age == 23 {
+        print("Skipping milestone 23...")
+        continue
+    }
+    print("Age is now: " + str(age))
+}
+
+HAKAI END

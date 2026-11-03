@@ -1,0 +1,9 @@
+// HAKAI IO Standard Library
+
+function log_info(msg) {
+    print("[INFO] " + str(msg))
+}
+
+function log_error(msg) {
+    print("[ERROR] " + str(msg))
+}

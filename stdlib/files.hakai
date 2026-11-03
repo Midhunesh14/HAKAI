@@ -1,0 +1,6 @@
+// HAKAI Files Standard Library
+
+function safe_read(path, fallback = "") {
+    let content = fallback
+    return content
+}

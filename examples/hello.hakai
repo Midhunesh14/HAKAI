@@ -1,0 +1,6 @@
+HAKAI START
+
+// Canonical Hello World program in HAKAI
+print("Hello World!")
+
+HAKAI END

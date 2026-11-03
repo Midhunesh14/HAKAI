@@ -1,0 +1,1 @@
+HBC{"name": "C:\\VIT\\Projects\\HAKAI\\examples\\hello.hakai", "version": "1.0.0", "constants": ["Hello World!"], "names": ["print"], "param_names": [], "instructions": [{"op": 2, "arg": 0, "line": 4}, {"op": 1, "arg": 0, "line": 4}, {"op": 20, "arg": 1, "line": 4}, {"op": 22, "arg": null, "line": 4}, {"op": 29, "arg": null, "line": 1}]}
