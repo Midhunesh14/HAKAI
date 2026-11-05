@@ -7,7 +7,7 @@ import math
 import os
 import sys
 import time
-from typing import Any, Callable, Dict, List, Optional
+from typing import Any, Callable, Dict, List, Optional, Set
 from compiler.errors import HakaiImportError, HakaiTypeError, HakaiRuntimeError
 from interpreter.values import (
     HakaiBuiltinFunction,
@@ -65,6 +65,8 @@ class RuntimeContext:
         self.stdout = stdout or sys.stdout
         self.stdin = stdin or sys.stdin
         self.modules: Dict[str, Dict[str, Any]] = {}
+        self._loading_modules: Set[str] = set()
+        self._merged_stdlib_modules: Set[str] = set()
         self._init_standard_library()
 
     def print(self, *args: Any) -> None:
@@ -193,30 +195,86 @@ class RuntimeContext:
             "open": HakaiBuiltinFunction("open", lambda interp, p, m="r": HakaiFileHandle(p, m), 1, 2),
         }
 
+    def _execute_module_file(self, file_path: str) -> Dict[str, Any]:
+        """Execute a .hakai source file as an isolated module and return exported bindings."""
+        from compiler.lexer import Lexer
+        from compiler.parser import Parser
+        from interpreter.interpreter import Interpreter
+
+        with open(file_path, "r", encoding="utf-8") as f:
+            code = f.read()
+
+        tokens = Lexer(code, filename=file_path).tokenize()
+        program = Parser(tokens, source_code=code).parse()
+
+        sub_interp = Interpreter(runtime_context=self, base_dir=os.path.dirname(os.path.abspath(file_path)))
+        sub_interp.interpret(program)
+
+        return dict(sub_interp.environment.values)
+
     def load_module(self, name: str, current_dir: str = ".") -> Dict[str, Any]:
-        if name in self.modules:
+        if name in self._loading_modules:
+            raise HakaiImportError(f"Circular import detected when loading module '{name}'.")
+
+        # If already fully loaded and merged, return cached module
+        if name in self.modules and name in self._merged_stdlib_modules:
             return self.modules[name]
 
-        # Look for local .hakai file
-        local_path = os.path.join(current_dir, f"{name}.hakai")
-        if os.path.isfile(local_path):
-            from compiler.lexer import Lexer
-            from compiler.parser import Parser
-            from interpreter.interpreter import Interpreter
+        self._loading_modules.add(name)
+        try:
+            # 1. Check local/relative to current_dir
+            local_path = os.path.join(current_dir, f"{name}.hakai")
+            if os.path.isfile(local_path):
+                exported = self._execute_module_file(local_path)
+                if name in self.modules:
+                    self.modules[name].update(exported)
+                else:
+                    self.modules[name] = exported
+                self._merged_stdlib_modules.add(name)
+                return self.modules[name]
 
-            with open(local_path, "r", encoding="utf-8") as f:
-                code = f.read()
+            # 2. Check .hakai_packages in current directory or project root
+            for base_candidate in [current_dir, os.getcwd()]:
+                pkg_dir = os.path.join(base_candidate, ".hakai_packages", name)
+                if os.path.isdir(pkg_dir):
+                    manifest_path = os.path.join(pkg_dir, "hakai.toml")
+                    entry_file = f"{name}.hakai"
+                    if os.path.isfile(manifest_path):
+                        try:
+                            from package_manager.package import PackageMetadata
+                            meta = PackageMetadata.from_toml_file(manifest_path)
+                            entry_file = meta.entry
+                        except Exception:
+                            pass
+                    target_pkg_file = os.path.join(pkg_dir, entry_file)
+                    if os.path.isfile(target_pkg_file):
+                        exported = self._execute_module_file(target_pkg_file)
+                        self.modules[name] = exported
+                        self._merged_stdlib_modules.add(name)
+                        return self.modules[name]
 
-            tokens = Lexer(code, filename=local_path).tokenize()
-            program = Parser(tokens, source_code=code).parse()
+            # 3. Check standard library directory (stdlib package or HAKAI_STDLIB_PATH)
+            from stdlib import get_stdlib_path
+            stdlib_dir = get_stdlib_path()
+            if stdlib_dir and os.path.isdir(stdlib_dir):
+                stdlib_file = os.path.join(stdlib_dir, f"{name}.hakai")
+                if os.path.isfile(stdlib_file):
+                    exported = self._execute_module_file(stdlib_file)
+                    if name in self.modules:
+                        self.modules[name].update(exported)
+                    else:
+                        self.modules[name] = exported
+                    self._merged_stdlib_modules.add(name)
+                    return self.modules[name]
 
-            sub_interp = Interpreter(runtime_context=self, base_dir=os.path.dirname(local_path))
-            sub_interp.interpret(program)
+            # 4. Builtin native module without a .hakai companion
+            if name in self.modules:
+                self._merged_stdlib_modules.add(name)
+                return self.modules[name]
 
-            # Export user variables and functions
-            exported = dict(sub_interp.environment.values)
-            self.modules[name] = exported
-            return exported
-
-        raise HakaiImportError(f"Module '{name}' not found.")
+            raise HakaiImportError(
+                f"Module '{name}' not found. Searched in '{current_dir}', '.hakai_packages', and '{stdlib_dir}'."
+            )
+        finally:
+            self._loading_modules.discard(name)
 

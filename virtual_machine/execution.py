@@ -170,8 +170,9 @@ class ExecutionEngine:
             callee = frame.pop()
 
             if hasattr(callee, "call"):
-                # HakaiCallable or HakaiBuiltinFunction
-                ret = callee.call(None, args)
+                # HakaiCallable or HakaiBuiltinFunction or HakaiFunction
+                interp = getattr(self.vm, "get_interpreter", lambda: None)()
+                ret = callee.call(interp, args)
                 frame.push(ret)
             elif isinstance(callee, HakaiCodeObject):
                 # User-defined bytecode function
@@ -262,6 +263,16 @@ class ExecutionEngine:
             obj = frame.pop()
             if isinstance(obj, dict) and name in obj:
                 frame.push(obj[name])
+            elif hasattr(obj, "symbols") and isinstance(obj.symbols, dict) and name in obj.symbols:
+                frame.push(obj.symbols[name])
+            elif hasattr(obj, "get") and callable(obj.get):
+                try:
+                    frame.push(obj.get(name))
+                except Exception:
+                    if hasattr(obj, name):
+                        frame.push(getattr(obj, name))
+                    else:
+                        raise HakaiRuntimeError(f"Cannot get attribute '{name}' on {obj}.")
             elif hasattr(obj, name):
                 frame.push(getattr(obj, name))
             else:

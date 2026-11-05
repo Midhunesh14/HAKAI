@@ -168,7 +168,7 @@ def cmd_new(project_name: str) -> int:
     installer.init_project(project_name)
 
     print_success(f"Created new HAKAI project '{project_name}'.")
-    print_info(f"To run your project:\n  cd {project_name}\n  python main.py run main.hakai")
+    print_info(f"To run your project:\n  cd {project_name}\n  hakai run main.hakai")
     return 0
 
 
@@ -204,14 +204,28 @@ def cmd_format(filepath: str) -> int:
 
 
 def cmd_studio() -> int:
-    from studio import launch_studio
-    return launch_studio()
+    try:
+        from studio import launch_studio
+        return launch_studio()
+    except ImportError:
+        print_error(
+            "HAKAI Studio requires PySide6 GUI libraries.\n"
+            "Install HAKAI with Studio support via:\n"
+            "  pip install \"hakai-lang[studio]\""
+        )
+        return 1
 
 
 def build_cli_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="hakai",
         description="The HAKAI Programming Language Toolchain",
+    )
+    parser.add_argument(
+        "--version", "-v",
+        action="version",
+        version=f"HAKAI Programming Language v{VERSION}",
+        help="Print HAKAI toolchain version",
     )
     subparsers = parser.add_subparsers(dest="subcommand", help="HAKAI commands")
 

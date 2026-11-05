@@ -26,6 +26,13 @@ class VirtualMachine:
         self.call_stack = CallStack()
         self.engine = ExecutionEngine(self, self.call_stack)
         self.last_result: Any = None
+        self._interpreter: Optional[Any] = None
+
+    def get_interpreter(self) -> Any:
+        if self._interpreter is None:
+            from interpreter.interpreter import Interpreter
+            self._interpreter = Interpreter(runtime_context=self.runtime_context)
+        return self._interpreter
 
     def run(self, code: HakaiCodeObject) -> Any:
         """Execute a compiled code object in the VM."""
