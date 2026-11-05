@@ -1,26 +1,39 @@
 # Getting Started with HAKAI
 
-## Installation
-HAKAI can be run directly using Python 3.10+ or installed via the provided installer script.
+HAKAI is a modern, independent programming language featuring an AST-based tree-walk interpreter, optimizing bytecode compiler, virtual machine (`HVM`), package manager (`HPM`), and IDE (`HAKAI Studio`).
 
+---
+
+## 1. Quick Installation
+
+### Python Package (Recommended for Python users)
 ```bash
-# Check version
-python main.py version
+# Core language toolchain and HPM CLI
+pip install hakai-lang
 
-# Run an example
-python main.py run examples/hello.hakai
-
-# Compile to bytecode
-python main.py build examples/hello.hakai
-
-# Run compiled bytecode
-python main.py run examples/hello.hbc
-
-# Launch HAKAI Studio IDE
-python main.py studio
+# With HAKAI Studio GUI IDE
+pip install "hakai-lang[studio]"
 ```
 
-## First Program
+### Standalone Executable (No Python required)
+Download the standalone installer or portable zip for Windows, Linux, or macOS from [GitHub Releases](https://github.com/Midhunesh14/HAKAI/releases).
+
+For complete installation steps, PATH setup, and troubleshooting, see the [Installation Guide](INSTALLATION.md).
+
+---
+
+## 2. Verifying the Toolchain
+
+After installation, verify both commands are available:
+```bash
+hakai --version
+hpm --version
+```
+
+---
+
+## 3. Your First Program
+
 Create a file named `hello.hakai`:
 ```hakai
 HAKAI START
@@ -30,12 +43,55 @@ print(greeting)
 
 HAKAI END
 ```
-Execute it:
+
+### Run with the AST Interpreter
 ```bash
-python main.py run hello.hakai
+hakai run hello.hakai
 ```
 Output:
 ```
 Hello, HAKAI World!
 ```
 
+### Compile to Bytecode and Run on the VM
+Compile the source to `.hbc` bytecode:
+```bash
+hakai build hello.hakai
+```
+Execute the compiled binary on the HAKAI Virtual Machine (HVM):
+```bash
+hakai run hello.hbc
+```
+
+---
+
+## 4. Interactive REPL
+
+Experiment with language expressions and statements in the interactive shell:
+```bash
+hakai repl
+```
+```
+HAKAI Interactive REPL v1.0.0
+Type 'exit' or press Ctrl+C to quit.
+
+>>> let name = "Developer"
+>>> print("Hello " + name + "!")
+Hello Developer!
+>>> 2 ** 8
+256.0
+```
+
+---
+
+## 5. Next Steps
+
+- [Installation Guide](INSTALLATION.md)
+- [Language Specification](LANGUAGE_SPECIFICATION.md)
+- [Syntax Reference](SYNTAX.md)
+- [Functions Guide](FUNCTIONS.md)
+- [Object-Oriented Programming](OOP.md)
+- [Module System](MODULES.md)
+- [Compiler & VM Architecture](COMPILER.md)
+- [Standard Library Reference](STANDARD_LIBRARY.md)
+- [HPM Package Manager](PACKAGE_MANAGER.md)
