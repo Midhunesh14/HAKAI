@@ -1,10 +1,16 @@
 # HAKAI Programming Language (v1.0.0)
 
-[![Tests](https://img.shields.io/badge/tests-37%2F37%20passing-brightgreen.svg)]()
-[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)]()
+[![CI Build & Test](https://github.com/Midhunesh14/HAKAI/actions/workflows/ci.yml/badge.svg)](https://github.com/Midhunesh14/HAKAI/actions/workflows/ci.yml)
+[![Tests](https://img.shields.io/badge/tests-40%2F40%20passing-brightgreen.svg)]()
+[![PyPI](https://img.shields.io/badge/PyPI-hakai--lang%20v1.0.0-3775A9?logo=pypi&logoColor=white)](https://pypi.org/project/hakai-lang/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20Linux%20%7C%20macOS-lightgrey.svg)]()
 
-**HAKAI** is an independent, general-purpose programming language built from scratch. It provides clean syntax, strict lexical scoping, first-class functions and OOP, both an AST-based tree-walk interpreter and an optimizing bytecode compiler paired with a stack-based virtual machine (`HVM`), a desktop IDE (**HAKAI Studio**), and a dedicated package manager (**HPM**).
+> **PyPI Package**: [https://pypi.org/project/hakai-lang/](https://pypi.org/project/hakai-lang/)  
+> **Source Repository**: [https://github.com/Midhunesh14/HAKAI](https://github.com/Midhunesh14/HAKAI)  
+> **Release Downloads**: [GitHub Releases](https://github.com/Midhunesh14/HAKAI/releases)
+
+**HAKAI** is an independent, general-purpose programming language built from scratch. It features clean syntax, strict lexical scoping, first-class functions and OOP, both an AST-based tree-walk interpreter and an optimizing bytecode compiler paired with a stack-based virtual machine (`HVM`), a desktop IDE (**HAKAI Studio**), and a dedicated package manager (**HPM**).
 
 ---
 
@@ -23,24 +29,56 @@
    - Collections: dynamic `Array`, key-value `Map`, immutable `Tuple`.
    - Safe operations with explicit type conversion functions (`str()`, `int()`, `float()`, `bool()`, `len()`, `type()`).
 5. **Standard Library**: Built-in and standard modules for `math`, `strings`, `collections`, `files`, `io`, and `system`.
-6. **HAKAI Studio IDE**: PySide6 desktop IDE with custom dark styling, syntax highlighting, line numbers gutter, auto-indentation, project file tree, and live execution panel.
+6. **HAKAI Studio IDE**: Desktop IDE with custom dark styling, syntax highlighting, line numbers gutter, auto-indentation, project file tree, and live execution panel.
 7. **HPM (HAKAI Package Manager)**: Manifest-based (`hakai.toml`) package management, dependency resolution, lockfile creation (`hakai.lock`), and local caching.
+
+---
+
+## Installation & Distribution
+
+HAKAI can be installed either via Python's package manager (`pip`) directly from PyPI or as a standalone executable (no Python installation required).
+
+### Method A: Python Package Distribution (`pip`)
+
+HAKAI is officially published on PyPI as [**`hakai-lang`**](https://pypi.org/project/hakai-lang/). Requires Python 3.10+:
+
+```bash
+# Core language toolchain, compiler, VM, and HPM CLI (~35 KB wheel)
+pip install hakai-lang
+
+# Optional: with HAKAI Studio desktop IDE (PySide6 / Qt6)
+pip install "hakai-lang[studio]"
+```
+
+Verify your installation:
+```bash
+hakai --version
+# HAKAI Programming Language v1.0.0
+
+hpm --version
+# HAKAI Package Manager (HPM) v1.0.0
+```
+
+### Method B: Standalone Public Installers (No Python Required)
+
+Download pre-built standalone binaries from the [GitHub Releases](https://github.com/Midhunesh14/HAKAI/releases) page:
+
+- **Windows 10/11 (64-bit)**:
+  - `HAKAI-1.0.0-Windows-x64-Portable.zip`: Standalone `hakai.exe`, `hpm.exe`, stdlib, and examples.
+  - `HAKAI-1.0.0-Windows-Installer.bat`: One-click setup script that installs to `%LOCALAPPDATA%\HAKAI` and configures `PATH`.
+  - `HAKAI-Studio-1.0.0-Windows-x64.zip`: Standalone HAKAI Studio desktop IDE executable.
+- **Linux (x86_64)**:
+  - `HAKAI-1.0.0-Linux-x64.tar.gz`: Self-contained `hakai` and `hpm` executables.
+- **macOS (Intel / Apple Silicon)**:
+  - `HAKAI-1.0.0-macOS-universal.tar.gz`: Self-contained `hakai` and `hpm` executables.
+
+Detailed instructions, PATH setup, and checksum verification are available in the [Installation Guide](docs/INSTALLATION.md).
 
 ---
 
 ## Quick Start
 
-### 1. Installation
-Clone or open the repository in Python 3.10+:
-```bash
-pip install -r requirements.txt
-```
-To run the automated test suite:
-```bash
-python -m pytest tests/ -v
-```
-
-### 2. Running a HAKAI Script
+### 1. Running a HAKAI Script
 Create a file named `hello.hakai`:
 ```hakai
 HAKAI START
@@ -50,26 +88,36 @@ print(greeting)
 
 HAKAI END
 ```
+
 Execute using the interpreter:
 ```bash
-python main.py run hello.hakai
+hakai run hello.hakai
 ```
 
-### 3. Compiling to Bytecode & Running on the VM
+### 2. Compiling to Bytecode & Running on the VM
 Compile the source file into `.hbc` bytecode:
 ```bash
-python main.py build hello.hakai
+hakai build hello.hakai
 ```
-Execute the compiled bytecode with the HAKAI Virtual Machine:
+
+Execute the compiled bytecode with the HAKAI Virtual Machine (HVM):
 ```bash
-python main.py run hello.hbc
+hakai run hello.hbc
+```
+
+### 3. Syntax & Semantic Static Check
+```bash
+hakai check hello.hakai
 ```
 
 ### 4. Interactive REPL
 ```bash
-python main.py repl
+hakai repl
 ```
 ```
+HAKAI Interactive REPL v1.0.0
+Type 'exit' or press Ctrl+C to quit.
+
 >>> let x = 10
 >>> let y = 20
 >>> print(x + y)
@@ -78,8 +126,9 @@ python main.py repl
 
 ### 5. Launch HAKAI Studio Desktop IDE
 ```bash
-python main.py studio
+hakai studio
 ```
+*(Requires `pip install "hakai-lang[studio]"` or the standalone Studio bundle).*
 
 ---
 
@@ -130,7 +179,7 @@ let buddy = Dog("Buddy")
 print(buddy.speak()) // Buddy barks!
 ```
 
-### Loops
+### Loops & Repetitions
 ```hakai
 // Fixed repetition loop
 repeat 3 {
@@ -153,18 +202,19 @@ while i < 10 {
 import math
 import strings
 
-print(math.sqrt(144)) // 12.0
+print(math.sqrt(144))         // 12.0
 print(strings.upper("hakai")) // HAKAI
 ```
 
 ---
 
-## HPM Package Manager
+## HPM (HAKAI Package Manager)
 
-Initialize a new project:
+Initialize a new project manifest:
 ```bash
-python -m package_manager.cli init my_project
+hpm init my_project
 ```
+
 Manifest (`hakai.toml`):
 ```toml
 [package]
@@ -175,9 +225,15 @@ entry = "main.hakai"
 [dependencies]
 math_extra = "0.1.0"
 ```
-Install dependencies:
+
+Install project dependencies:
 ```bash
-python -m package_manager.cli install
+hpm install
+```
+
+List installed packages:
+```bash
+hpm list
 ```
 
 ---
@@ -185,9 +241,10 @@ python -m package_manager.cli install
 ## Documentation
 
 Full language and toolchain documentation is available in [`docs/`](docs/):
+- [Installation Guide](docs/INSTALLATION.md)
+- [Getting Started Guide](docs/GETTING_STARTED.md)
 - [Language Specification](docs/LANGUAGE_SPECIFICATION.md)
 - [Syntax Reference](docs/SYNTAX.md)
-- [Getting Started Guide](docs/GETTING_STARTED.md)
 - [Functions Guide](docs/FUNCTIONS.md)
 - [Object-Oriented Programming](docs/OOP.md)
 - [Module System](docs/MODULES.md)
@@ -198,6 +255,27 @@ Full language and toolchain documentation is available in [`docs/`](docs/):
 
 ---
 
+## Development & Testing
+
+Clone the repository and install in editable mode:
+```bash
+git clone https://github.com/Midhunesh14/HAKAI.git
+cd HAKAI
+pip install -e ".[dev,studio]"
+```
+
+Run test suite:
+```bash
+python -m pytest tests/ -v
+```
+
+Build wheels and check packages:
+```bash
+python -m build
+python -m twine check dist/*
+```
+
+---
+
 ## License
 HAKAI is released under the [MIT License](LICENSE).
-

@@ -3,6 +3,8 @@
 import os
 import pytest
 
+pyside6 = pytest.importorskip("PySide6")
+
 os.environ["QT_QPA_PLATFORM"] = "offscreen"
 
 from PySide6.QtWidgets import QApplication

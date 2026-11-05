@@ -1,0 +1,161 @@
+name: Release Automation
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+    inputs:
+      publish_to_pypi:
+        description: "Publish to PyPI (requires PyPI Trusted Publisher configured)"
+        required: true
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+  id-token: write
+
+jobs:
+  build-python-packages:
+    name: Build Wheel & Source Distribution
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Build distributions
+        run: |
+          python -m pip install --upgrade pip build twine
+          python -m build
+          python -m twine check dist/*
+
+      - name: Upload Python artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: python-distributions
+          path: dist/*
+
+  build-standalone-binaries:
+    name: Build Standalone (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: windows-latest
+            artifact-name: windows-binaries
+          - os: ubuntu-latest
+            artifact-name: linux-binaries
+          - os: macos-latest
+            artifact-name: macos-binaries
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Install build tools
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e ".[dev,studio]"
+
+      - name: Build standalone executables (Windows)
+        if: runner.os == 'Windows'
+        run: |
+          python -m PyInstaller --clean --distpath dist/bin scripts/hakai_cli.spec
+          python -m PyInstaller --clean --distpath dist/bin scripts/hpm_cli.spec
+          python -m PyInstaller --clean --distpath dist/bin scripts/hakai_studio.spec
+          python scripts/package_distributions.py
+
+      - name: Build standalone executables (Linux)
+        if: runner.os == 'Linux'
+        run: |
+          python -m PyInstaller --clean --distpath dist/bin scripts/hakai_cli.spec
+          python -m PyInstaller --clean --distpath dist/bin scripts/hpm_cli.spec
+          mkdir -p dist/package
+          cp dist/bin/hakai dist/package/
+          cp dist/bin/hpm dist/package/
+          cp LICENSE README.md dist/package/
+          cp -r examples dist/package/
+          tar -czvf "dist/HAKAI-Linux-x64.tar.gz" -C dist/package .
+
+      - name: Build standalone executables (macOS)
+        if: runner.os == 'macOS'
+        run: |
+          python -m PyInstaller --clean --distpath dist/bin scripts/hakai_cli.spec
+          python -m PyInstaller --clean --distpath dist/bin scripts/hpm_cli.spec
+          mkdir -p dist/package
+          cp dist/bin/hakai dist/package/
+          cp dist/bin/hpm dist/package/
+          cp LICENSE README.md dist/package/
+          cp -r examples dist/package/
+          tar -czvf "dist/HAKAI-macOS-x64.tar.gz" -C dist/package .
+
+      - name: Upload OS release bundles
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.artifact-name }}
+          path: dist/*.*
+
+  create-github-release:
+    name: Create GitHub Release
+    needs: [build-python-packages, build-standalone-binaries]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download all build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: release-artifacts
+
+      - name: Organize release files and compute checksums
+        run: |
+          mkdir -p final-dist
+          find release-artifacts -type f -exec cp {} final-dist/ \;
+          rm -f final-dist/SHA256SUMS.txt
+          cd final-dist
+          sha256sum * > SHA256SUMS.txt
+          cat SHA256SUMS.txt
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        if: startsWith(github.ref, 'refs/tags/') || github.event_name == 'workflow_dispatch'
+        with:
+          files: final-dist/*
+          name: "HAKAI Release ${{ github.ref_name }}"
+          draft: false
+          prerelease: false
+          generate_release_notes: true
+
+  publish-pypi:
+    name: Publish to PyPI (Trusted Publishing OIDC)
+    needs: [create-github-release]
+    if: (startsWith(github.ref, 'refs/tags/') && !contains(github.ref, 'rc')) || github.event.inputs.publish_to_pypi == true
+    runs-on: ubuntu-latest
+    environment:
+      name: pypi
+      url: https://pypi.org/p/hakai-lang
+    permissions:
+      id-token: write
+
+    steps:
+      - name: Download python distributions
+        uses: actions/download-artifact@v4
+        with:
+          name: python-distributions
+          path: dist
+
+      - name: Publish to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          skip-existing: true
+

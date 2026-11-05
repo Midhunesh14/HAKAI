@@ -14,6 +14,12 @@ def create_parser() -> argparse.ArgumentParser:
         prog="hpm",
         description="HAKAI Package Manager (HPM) 1.0.0",
     )
+    parser.add_argument(
+        "--version", "-v",
+        action="version",
+        version="HAKAI Package Manager (HPM) v1.0.0",
+        help="Show HPM version number and exit",
+    )
     subparsers = parser.add_subparsers(dest="command", help="HPM Command")
 
     # init
