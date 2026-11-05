@@ -58,3 +58,4 @@ jobs:
           hakai run examples/modules.hakai
           hakai build examples/hello.hakai -o test_hello.hbc
           hakai run test_hello.hbc
+

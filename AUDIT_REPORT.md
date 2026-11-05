@@ -40,3 +40,4 @@ Branch: `distribution/packaging-and-installers`
 - Missing `.github/workflows/ci.yml` for multi-OS CI testing (Windows, Ubuntu, macOS, Python 3.10-3.13).
 - Missing `.github/workflows/release.yml` with PyPI Trusted Publishing and cross-platform standalone executable artifacts.
 - Missing PyInstaller build specifications for creating standalone executables.
+
