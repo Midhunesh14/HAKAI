@@ -1,27 +1,73 @@
 [build-system]
-requires = ["setuptools>=61.0"]
+requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "hakai-lang"
 version = "1.0.0"
-description = "The HAKAI Programming Language - Independent compiler, interpreter, VM and IDE"
+description = "The HAKAI Programming Language - Independent compiler, interpreter, VM, package manager, and IDE"
 readme = "README.md"
 requires-python = ">=3.10"
-license = {text = "MIT"}
+license = "MIT"
 authors = [
-    {name = "HAKAI Language Architecture Team"}
+    {name = "HAKAI Language Architecture Team", email = "architect@hakai-lang.org"}
+]
+keywords = ["programming-language", "compiler", "interpreter", "virtual-machine", "bytecode", "hakai"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Software Development :: Compilers",
+    "Topic :: Software Development :: Interpreters",
+    "Topic :: Software Development :: User Interfaces",
 ]
 dependencies = [
+    "tomli>=1.1.0; python_version<'3.11'",
+]
+
+[project.optional-dependencies]
+studio = [
     "PySide6>=6.6.0",
 ]
+dev = [
+    "pytest>=8.0.0",
+    "build>=1.0.0",
+    "twine>=5.0.0",
+    "pyinstaller>=6.0.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/Midhunesh14/HAKAI"
+Documentation = "https://github.com/Midhunesh14/HAKAI#readme"
+Repository = "https://github.com/Midhunesh14/HAKAI.git"
+"Bug Tracker" = "https://github.com/Midhunesh14/HAKAI/issues"
 
 [project.scripts]
 hakai = "cli.commands:main"
 hpm = "package_manager.cli:main"
 
+[tool.setuptools.packages.find]
+where = ["."]
+include = [
+    "cli*",
+    "compiler*",
+    "interpreter*",
+    "package_manager*",
+    "stdlib*",
+    "studio*",
+    "virtual_machine*",
+]
+exclude = ["tests*", "examples*", "docs*", "scripts*"]
+
+[tool.setuptools.package-data]
+stdlib = ["*.hakai"]
+
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 python_files = ["test_*.py"]
 pythonpath = ["."]
-
