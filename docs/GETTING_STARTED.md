@@ -7,6 +7,7 @@ HAKAI is a modern, independent programming language featuring an AST-based tree-
 ## 1. Quick Installation
 
 ### Python Package (Recommended for Python users)
+Distributed on PyPI as [**`hakai-lang`**](https://pypi.org/project/hakai-lang/):
 ```bash
 # Core language toolchain and HPM CLI
 pip install hakai-lang

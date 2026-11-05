@@ -10,6 +10,9 @@ HAKAI is distributed through two primary channels:
 
 ## 1. Python Package Distribution (PyPI)
 
+HAKAI is published as an official package on PyPI:
+👉 **[https://pypi.org/project/hakai-lang/](https://pypi.org/project/hakai-lang/)**
+
 ### Quick Install with pip
 
 The core HAKAI distribution includes the compiler, recursive-descent parser, AST optimizer, tree-walk interpreter, HAKAI Virtual Machine (`HVM`), `.hbc` bytecode engine, HAKAI Package Manager (`HPM`), and standard library.
@@ -263,3 +266,4 @@ sha256sum -c SHA256SUMS.txt
   ```bash
   sudo rm -f /usr/local/bin/hakai /usr/local/bin/hpm
   ```
+

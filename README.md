@@ -2,9 +2,13 @@
 
 [![CI Build & Test](https://github.com/Midhunesh14/HAKAI/actions/workflows/ci.yml/badge.svg)](https://github.com/Midhunesh14/HAKAI/actions/workflows/ci.yml)
 [![Tests](https://img.shields.io/badge/tests-40%2F40%20passing-brightgreen.svg)]()
-[![PyPI - Version](https://img.shields.io/badge/pypi-hakai--lang%20v1.0.0-blue.svg)](https://pypi.org/project/hakai-lang/)
+[![PyPI](https://img.shields.io/badge/PyPI-hakai--lang%20v1.0.0-3775A9?logo=pypi&logoColor=white)](https://pypi.org/project/hakai-lang/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20Linux%20%7C%20macOS-lightgrey.svg)]()
+
+> **PyPI Package**: [https://pypi.org/project/hakai-lang/](https://pypi.org/project/hakai-lang/)  
+> **Source Repository**: [https://github.com/Midhunesh14/HAKAI](https://github.com/Midhunesh14/HAKAI)  
+> **Release Downloads**: [GitHub Releases](https://github.com/Midhunesh14/HAKAI/releases)
 
 **HAKAI** is an independent, general-purpose programming language built from scratch. It features clean syntax, strict lexical scoping, first-class functions and OOP, both an AST-based tree-walk interpreter and an optimizing bytecode compiler paired with a stack-based virtual machine (`HVM`), a desktop IDE (**HAKAI Studio**), and a dedicated package manager (**HPM**).
 
@@ -32,11 +36,11 @@
 
 ## Installation & Distribution
 
-HAKAI can be installed either via Python's package manager (`pip`) or as a standalone executable (no Python installation required).
+HAKAI can be installed either via Python's package manager (`pip`) directly from PyPI or as a standalone executable (no Python installation required).
 
 ### Method A: Python Package Distribution (`pip`)
 
-Requires Python 3.10+:
+HAKAI is officially published on PyPI as [**`hakai-lang`**](https://pypi.org/project/hakai-lang/). Requires Python 3.10+:
 
 ```bash
 # Core language toolchain, compiler, VM, and HPM CLI (~35 KB wheel)
